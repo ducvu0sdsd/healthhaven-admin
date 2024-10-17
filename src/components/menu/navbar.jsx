@@ -30,16 +30,34 @@ const Navbar = () => {
                     <span className='hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]'>Quản Lý Bác Sĩ</span>
                 </div>
             </Link>
+            <Link href={'/quan-ly-benh-nhan'}>
+                <div className='flex w-full items-center justify-start gap-2 cursor-pointer'>
+                    <img src='/benhnhan-manager.png' width={'32px'} />
+                    <span className='hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]'>Quản Lý Bệnh Nhân</span>
+                </div>
+            </Link>
             <Link href={'/quan-ly-benh'}>
                 <div className='flex w-full items-center justify-start gap-2 cursor-pointer'>
-                    <img src='/hocphan.png' width={'32px'} />
+                    <img src='/loaibenh-manage.png' width={'35px'} />
                     <span className='hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]'>Quản Lý Loại Khám</span>
                 </div>
             </Link>
             <Link href={'/thiet-lap-cuoc-hen'}>
                 <div className='flex w-full items-center justify-start gap-2 cursor-pointer'>
-                    <img src='/hocphan.png' width={'32px'} />
-                    <span className='hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]'>Thiết Lập Cuộc Hẹn</span>
+                    <img src='/gia-manager.png' width={'32px'} />
+                    <span className='hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]'>Quán Lý Giá Dịch Vụ</span>
+                </div>
+            </Link>
+            <Link href={'/quan-ly-forum'}>
+                <div className='flex w-full items-center justify-start gap-2 cursor-pointer'>
+                    <img src='/cam-nang-manager.png' width={'32px'} />
+                    <span className='hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]'>Quản Lý Cẩm Nang</span>
+                </div>
+            </Link>
+            <Link href={'/quan-ly-qa'}>
+                <div className='flex w-full items-center justify-start gap-2 cursor-pointer'>
+                    <img src='/qa-manager.jpg' width={'32px'} className='rounded-full' />
+                    <span className='hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]'>Quản Lý Hỏi Đáp</span>
                 </div>
             </Link>
             <div onClick={() => handleSignOut()} className='flex w-full items-center justify-start gap-2 cursor-pointer'>

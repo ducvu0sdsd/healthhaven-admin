@@ -81,6 +81,9 @@ const CreateThietLapForm = ({ visible }) => {
                     <option value='Online'>Online</option>
                     <option value='Offline'>Offline</option>
                     <option value='Theo Dõi Hàng Tuần'>Theo Dõi Hàng Tuần</option>
+                    <option value='Theo Dõi Sức Khỏe 3 Tháng'>Theo Dõi Sức Khỏe 3 Tháng</option>
+                    <option value='Theo Dõi Sức Khỏe 6 Tháng'>Theo Dõi Sức Khỏe 6 Tháng</option>
+                    <option value='Theo Dõi Sức Khỏe 12 Tháng'>Theo Dõi Sức Khỏe 12 Tháng</option>
                     {/* {dsBenh.map((benh, index) => (
                         <option value={benh._id} key={index}>{benh.title}</option>
                     ))} */}

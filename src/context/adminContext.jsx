@@ -3,11 +3,11 @@ import CreateBacSiForm from '@/components/admin/bac-si-management/createBacSiFro
 import UpdateBacSiForm from '@/components/admin/bac-si-management/updateBacSiForm'
 import CreateBenhForm from '@/components/admin/benh-management/createBenhFrom'
 import UpdateBenhForm from '@/components/admin/benh-management/updateBenhFrom'
+import UpdateBenhNhanForm from '@/components/admin/benh-nhan-management/updateBenhNhanForm'
 import CreateThietLapForm from '@/components/admin/thiet-lap-management/createThietLapFrom'
 import UpdateThietLapForm from '@/components/admin/thiet-lap-management/updateThietLapFrom'
 import Wrapper from '@/components/wrapper'
 import React, { createContext, useRef, useState } from 'react'
-
 export const adminContext = createContext()
 
 const AdminProvider = ({ children }) => {
@@ -20,7 +20,7 @@ const AdminProvider = ({ children }) => {
     const [dataUpdateBacSi, setDataUpdateBacSi] = useState(undefined)
     const [dataUpdateBenh, setDataUpdateBenh] = useState(undefined)
     const [dataUpdateThietLap, setDataUpdateThietLap] = useState(undefined)
-
+    const [dataUpdateBenhNhan, setDataUpdateBenhNhan] = useState(undefined)
     const showWrapper = () => {
         setVisibleWrapper(true)
     }
@@ -34,6 +34,7 @@ const AdminProvider = ({ children }) => {
         setDataUpdateBacSi(undefined)
         setDataUpdateBenh(undefined)
         setDataUpdateThietLap(undefined)
+        setDataUpdateBenhNhan(undefined)
     }
 
     const showCreateThietlapForm = () => {
@@ -63,11 +64,15 @@ const AdminProvider = ({ children }) => {
         showWrapper();
         setDataUpdateBacSi(data)
     }
-
+    const showUpdateBenhNhanForm = (data) => {
+        showWrapper();
+        setDataUpdateBenhNhan(data)
+    }
     const adminData = {
         visibleCreateBacSiForm,
         //update
         dataUpdateBacSi,
+        dataUpdateBenhNhan,
     }
 
     const adminHandler = {
@@ -78,7 +83,10 @@ const AdminProvider = ({ children }) => {
         showUpdateBacSiForm,
         showUpdateBenhForm,
         showUpdateThietLapForm,
-        hiddenWrapper
+        showUpdateBenhNhanForm,
+        hiddenWrapper,
+        
+
     }
 
     return (
@@ -91,6 +99,7 @@ const AdminProvider = ({ children }) => {
             <UpdateBenhForm data={dataUpdateBenh} />
             <CreateThietLapForm visible={visibleCreateThietLapForm} />
             <UpdateThietLapForm data={dataUpdateThietLap} />
+            <UpdateBenhNhanForm data={dataUpdateBenhNhan} />
         </adminContext.Provider>
     )
 }

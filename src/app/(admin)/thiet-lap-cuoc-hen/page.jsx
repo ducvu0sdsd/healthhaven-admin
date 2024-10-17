@@ -26,7 +26,7 @@ const CuocHenManagement = () => {
         <section className='h-screen w-full flex z-0'>
             <Navbar />
             <div className='w-full h-screen relative pl-[20px] pb-[10px] flex flex-col gap-3'>
-                <Header image={'/calendar.png'} text={'Thiết Lập Cuộc Hẹn'} />
+                <Header image={'/calendar.png'} text={'Quản Lý Giá Dịch Vụ'} />
                 <ListThietLap dsThietLap={dsGiaCuocHen} />
                 <button onClick={() => adminHandler.showCreateThietlapForm()} className='fixed px-4 py-1 rounded-md top-4 right-3 text-[14px] bg-[green] text-[white]'>+ Thêm Thiết Lập</button>
             </div>
