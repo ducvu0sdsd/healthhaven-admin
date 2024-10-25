@@ -1,5 +1,5 @@
 "use client";
-import ListBenhNhan from "@/components/admin/benh-nhan-management/listBenhNhan";
+import ListTraLuong from "@/components/admin/tra-luong/listTraLuong";
 import Header from "@/components/header";
 import Navbar from "@/components/menu/navbar";
 import { adminContext } from "@/context/adminContext";
@@ -13,30 +13,34 @@ import React, {
 } from "react";
 
 const TraLuongManagement = () => {
-  const [dsBenhNhan, setDsBenhNhan] = useState([]);
+  const [dsPayment, setDsPayment] = useState([]);
   const { adminData, adminHandler } =
     useContext(adminContext);
   const { globalHandler } = useContext(globalContext);
 
   useEffect(() => {
     api({
-      path: "/auth/all/patient",
+      path: "/payments/get-all",
       sendToken: true,
       type: TypeHTTP.GET,
     }).then((res) => {
-      setDsBenhNhan(res);
+      setDsPayment(
+        res.filter(
+          (payment) => payment.namePayment === "PAYBACK"
+        )
+      );
     });
   }, []);
 
   return (
     <section className="h-screen w-full flex z-0">
       <Navbar />
-      <div className="w-full h-screen relative pl-[20px] pr-[250px] pb-[10px] flex flex-col gap-3">
+      <div className="w-full h-screen relative pl-[20px] pb-[10px] flex flex-col gap-3">
         <Header
           image={"/calendar.png"}
-          text={"Quản Lý Bệnh Nhân"}
+          text={"Quản Lý Nhận Tiền"}
         />
-        <ListBenhNhan dsBenhNhan={dsBenhNhan} />
+        <ListTraLuong payments={dsPayment} />
         {/* <button onClick={() => adminHandler.showCreateTraLuongForm()} className='fixed px-4 py-1 rounded-md top-4 right-3 text-[14px] bg-[green] text-[white]'>+ Thêm Bác Sĩ</button> */}
       </div>
     </section>

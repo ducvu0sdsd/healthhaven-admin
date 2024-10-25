@@ -80,7 +80,7 @@ const Navbar = () => {
           </span>
         </div>
       </Link>
-      <Link href={"/quan-ly-qa"}>
+      <Link href={"/tra-luong"}>
         <div className="flex w-full items-center justify-start gap-2 cursor-pointer">
           <img
             src="/tinhluong.png"
