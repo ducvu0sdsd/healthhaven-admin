@@ -9,12 +9,15 @@ import {
   convertISODateToString,
 } from "@/utils/others";
 import { ports } from "@/utils/routes";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 const ListTraLuong = ({ payments }) => {
   const { globalHandler } = useContext(globalContext);
   const { adminHandler } = useContext(adminContext);
-
+  const [reason, setReason] = useState("");
+  const [visibleFormReason, setVisibleFormReason] =
+    useState(false);
+  const [dataSelected, setDataSelected] = useState();
   const handleAccept = (appointment) => {
     globalHandler.notify(
       notifyType.LOADING,
@@ -125,7 +128,14 @@ const ListTraLuong = ({ payments }) => {
       });
     });
   };
-  const handleRefuse = (appointment) => {
+  const handleRefusePayBack = () => {
+    if (reason === "") {
+      globalHandler.notify(
+        notifyType.ERROR,
+        "Vui lòng nhập lý do từ chối"
+      );
+      return;
+    }
     globalHandler.notify(
       notifyType.LOADING,
       "Đang xử lý yêu cầu"
@@ -147,15 +157,14 @@ const ListTraLuong = ({ payments }) => {
       path: "/payments/pay-for-doctor",
       type: TypeHTTP.POST,
       body: {
-        _id: appointment._id,
+        _id: dataSelected._id,
         status_take_money: {
           type: "REJECTED",
           messages: "Từ chối yêu cầu",
         },
         dateTake: time,
-        beneficiaryAccount: appointment.doctor?.bank,
-        descriptionTake:
-          "Yêu cầu nhận tiền của bác sĩ đã bị từ chối!!!",
+        beneficiaryAccount: dataSelected.doctor?.bank,
+        descriptionTake: reason,
       },
 
       sendToken: true,
@@ -164,22 +173,28 @@ const ListTraLuong = ({ payments }) => {
         path: "/payBacks/refuse-status",
         type: TypeHTTP.POST,
         body: {
-          doctor_id: appointment.doctor?._id,
+          doctor_id: dataSelected.doctor?._id,
           status_type: "REQUEST",
           status: {
             type: "REFUSE",
             messages: "Đã từ chối",
           },
+          reason: reason,
         },
-
         sendToken: true,
       }).then((res2) => {
+        setVisibleFormReason(false);
+        setReason("");
         globalHandler.notify(
           notifyType.SUCCESS,
           "Yêu cầu đã bị từ chối!!!"
         );
       });
     });
+  };
+  const handleRefuse = (appointment) => {
+    setVisibleFormReason(true);
+    setDataSelected(appointment);
   };
   return (
     <div className="w-full h-[90%] overflow-auto mt-2">
@@ -305,6 +320,74 @@ const ListTraLuong = ({ payments }) => {
           ))}
         </tbody>
       </table>
+      {visibleFormReason && (
+        <div
+          style={{
+            height: "250px",
+            width: "550px",
+            transition: "0.3s",
+            backgroundImage: "url(/bg.png)",
+            backgroundSize: "cover",
+            overflow: "hidden",
+          }}
+          className="z-50 w-[300px] min-h-[100px] bg-[white] rounded-lg fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
+        >
+          <div
+            style={{
+              transition: "0.5s",
+              // marginLeft: `-${(currentStep - 1) * 100}%`,
+            }}
+            className="w-[100%] flex"
+          >
+            <div className="min-w-[100%] flex flex-col gap-4 px-4 pt-9">
+              <span className="font-space font-bold text-[20px]">
+                Lý do từ chối
+              </span>
+              <div className="flex flex-row justify-between">
+                <span className="font-space text-[14px]">
+                  BS.: {dataSelected.doctor?.fullName}
+                </span>
+                <span className="font-space text-[14px]">
+                  Thời gian : {dataSelected.dateTake?.time}-
+                  {dataSelected.dateTake?.day}/
+                  {dataSelected.dateTake?.month}/
+                  {dataSelected.dateTake?.year}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-evenly">
+                <input
+                  value={reason}
+                  onChange={(e) =>
+                    setReason(e.target.value)
+                  }
+                  placeholder="Lý do..."
+                  className="text-[13px] mt-1 w-[100%] h-[38px] bg-[white] border-[1px] border-[#cfcfcf] focus:outline-0 rounded-lg px-4"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col justify-center items-center">
+            <button
+              onClick={() => handleRefusePayBack()}
+              style={{
+                background:
+                  "linear-gradient(to right, #11998e, #38ef7d)",
+              }}
+              className="text-[white] z-[50] shadow-[#767676] absolute bottom-2 text-[15px] shadow-md rounded-xl px-[200px] py-2 transition-all cursor-pointer font-semibold"
+            >
+              Xác nhận từ chối
+            </button>
+          </div>
+          <button
+            onClick={() => {
+              setVisibleFormReason(false), setReason("");
+            }}
+          >
+            <i className="bx bx-x absolute right-2 top-2 text-[30px] text-[#5e5e5e]"></i>
+          </button>
+        </div>
+      )}
     </div>
   );
 };
