@@ -27,7 +27,14 @@ const Navbar = () => {
       <div className="flex w-full items-center justify-center gap-4 mb-[15px] mt-2">
         <Logo />
       </div>
-
+      <Link href={"/thong-ke"}>
+        <div className="flex w-full items-center justify-start gap-2 cursor-pointer">
+          <img src="/thongke.png" width={"32px"} />
+          <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
+            Thống Kê doanh thu
+          </span>
+        </div>
+      </Link>
       <Link href={"/quan-ly-bac-si"}>
         <div className="flex w-full items-center justify-start gap-2 cursor-pointer">
           <img src="/hocphan.png" width={"32px"} />
