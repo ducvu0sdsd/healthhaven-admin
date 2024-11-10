@@ -20,7 +20,8 @@ export const api = ({
     baseURL = "http://localhost:" + port;
     axios.defaults.baseURL = `${baseURL}`;
   } else {
-    baseURL = "https://shoeshop-backend.online";
+    // baseURL = "https://shoeshop-backend.online";
+    baseURL = 'http://localhost:8999'
     axios.defaults.baseURL = `${baseURL}`;
   }
   const accessToken =

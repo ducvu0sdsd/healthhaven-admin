@@ -46,7 +46,7 @@ const ThongKeManagement = () => {
           image={"/calendar.png"}
           text={"Thống kê doanh thu"}
         />
-        <div className="flex gap-3">
+        <div className="flex gap-3 w-full">
           <select
             onChange={(e) => setTicketType(e.target.value)}
             className="px-2 py-2 text-[15px] shadow-lg text-center focus:outline-0 rounded-md font-medium"

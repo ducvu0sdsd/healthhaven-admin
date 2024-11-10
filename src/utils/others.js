@@ -27,6 +27,9 @@ export const returnNumber = (num) => {
   return num;
 };
 export function formatMoney(num) {
+  if (num === 0) {
+    return ''
+  }
   if (num) {
     return num
       .toString()

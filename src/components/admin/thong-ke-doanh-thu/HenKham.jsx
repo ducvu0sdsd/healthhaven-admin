@@ -48,8 +48,8 @@ const HenKham = ({ type, setType }) => {
     intervalRef.current = setInterval(() => {
       setTime(
         new Date().getHours() +
-          ":" +
-          new Date().getMinutes()
+        ":" +
+        new Date().getMinutes()
       );
     }, 60000);
   }, []);
@@ -145,21 +145,14 @@ const HenKham = ({ type, setType }) => {
       appointments.length > 0 &&
       doctorRecords.length > 0
     ) {
-      setAppointments((prev) =>
-        prev.map((item) => {
-          const filter = doctorRecords.filter(
-            (item1) => item1._id === item.doctor_record_id
-          )[0];
-          return { ...item, doctorRecord: filter };
-        })
-      );
-    }
-  }, [appointments, doctorRecords]);
-
-  useEffect(() => {
-    if (appointments[0]?.doctorRecord) {
+      let arr1 = appointments.map((item) => {
+        const filter = doctorRecords.filter(
+          (item1) => item1._id === item.doctor_record_id
+        )[0];
+        return { ...item, doctorRecord: filter };
+      })
       let arr = [];
-      appointments.forEach((item) => {
+      arr1.forEach((item) => {
         if (
           !arr
             .map((item1) => item1._id)
@@ -169,7 +162,7 @@ const HenKham = ({ type, setType }) => {
         }
       });
       arr = arr.map((item) => {
-        const filter = appointments.filter(
+        const filter = arr1.filter(
           (item1) => item1.doctor_record_id === item._id
         );
         return {
@@ -182,7 +175,7 @@ const HenKham = ({ type, setType }) => {
       });
       setAppointmentFilter(arr);
     }
-  }, [appointments]);
+  }, [appointments, doctorRecords]);
 
   useEffect(() => {
     api({
@@ -327,7 +320,7 @@ const HenKham = ({ type, setType }) => {
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-4 mt-2">
+      <div className="grid grid-cols-4 gap-4 mt-2 w-full">
         <div
           className="h-[120px] gap-2 justify-center p-4 text-[white] rounded-lg flex flex-col"
           style={{
@@ -341,8 +334,8 @@ const HenKham = ({ type, setType }) => {
               {sumAppointment === 0
                 ? 0
                 : formatMoney(
-                    returnNumber(sumAppointment) * 60000
-                  )}{" "}
+                  returnNumber(sumAppointment) * 60000
+                )}{" "}
               đ
             </span>
           </div>
@@ -363,8 +356,8 @@ const HenKham = ({ type, setType }) => {
               {sumAppointmentWeek === 0
                 ? 0
                 : formatMoney(
-                    returnNumber(sumAppointmentWeek) * 60000
-                  )}{" "}
+                  returnNumber(sumAppointmentWeek) * 60000
+                )}{" "}
               đ
             </span>
           </div>
@@ -385,9 +378,9 @@ const HenKham = ({ type, setType }) => {
               {sumAppointmentMonth === 0
                 ? 0
                 : formatMoney(
-                    returnNumber(sumAppointmentMonth) *
-                      60000
-                  )}{" "}
+                  returnNumber(sumAppointmentMonth) *
+                  60000
+                )}{" "}
               đ
             </span>
           </div>
@@ -408,8 +401,8 @@ const HenKham = ({ type, setType }) => {
               {sumAppointmentYear === 0
                 ? 0
                 : formatMoney(
-                    returnNumber(sumAppointmentYear) * 60000
-                  )}{" "}
+                  returnNumber(sumAppointmentYear) * 60000
+                )}{" "}
               đ
             </span>
           </div>
@@ -418,14 +411,14 @@ const HenKham = ({ type, setType }) => {
           </span>
         </div>
       </div>
-      <div className="mt-8 relative h-[300px] w-full flex flex-col justify-center items-center gap-3">
+      {/* <div className="mt-8 relative h-[300px] w-full flex flex-col justify-center items-center gap-3">
         <div>
           <span className="text-[20px] font-bold">
             Doanh thu {typeTime[type]}
           </span>
         </div>
         <canvas ref={chartRef} />
-      </div>
+      </div> */}
       <div className="w-full max-h-[500px] mt-6 overflow-y-auto relative">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="sticky top-0 left-0 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -440,14 +433,14 @@ const HenKham = ({ type, setType }) => {
                 Bác sĩ
               </th>
               <th scope="col" className="w-[20%] py-3">
-                Số lượng cuộc hẹn
+                Số lượng cuộc hẹn đặt khám trực tuyến
               </th>
               <th scope="col" className="w-[23%] py-3">
                 Tổng tiền
               </th>
             </tr>
           </thead>
-          <tbody className=" w-[full] bg-black font-medium">
+          <tbody className=" w-full bg-black font-medium">
             {console.log(appointmentFilter)}
             {!loading &&
               appointments.map((appointment, index) => (
