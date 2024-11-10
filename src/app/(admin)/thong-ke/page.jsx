@@ -41,7 +41,7 @@ const ThongKeManagement = () => {
   return (
     <section className="h-screen w-full flex z-0">
       <Navbar />
-      <div className="w-full h-screen relative pl-[20px] pb-[10px] flex flex-col gap-3">
+      <div className="w-full min-h-screen relative pl-[20px] pb-[10px] flex flex-col gap-3">
         <Header
           image={"/calendar.png"}
           text={"Thống kê doanh thu"}

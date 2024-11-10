@@ -35,6 +35,9 @@ const HenKham = ({ type, setType }) => {
     useState(0);
   const [sumAppointmentYear, setSumAppointmentYear] =
     useState(0);
+  const [doctorRecords, setDoctorRecords] = useState([]);
+  const [appointmentFilter, setAppointmentFilter] =
+    useState([]);
   const typeTime = {
     1: "tổng",
     2: "tuần này",
@@ -49,6 +52,13 @@ const HenKham = ({ type, setType }) => {
           new Date().getMinutes()
       );
     }, 60000);
+  }, []);
+  useEffect(() => {
+    api({
+      type: TypeHTTP.GET,
+      path: "/doctorRecords/getAll",
+      sendToken: false,
+    }).then((res) => setDoctorRecords(res));
   }, []);
   useEffect(() => {
     if (chartRef.current && appointments) {
@@ -129,6 +139,51 @@ const HenKham = ({ type, setType }) => {
       chartRef.current.chart = newChart;
     }
   }, [appointments]);
+
+  useEffect(() => {
+    if (
+      appointments.length > 0 &&
+      doctorRecords.length > 0
+    ) {
+      setAppointments((prev) =>
+        prev.map((item) => {
+          const filter = doctorRecords.filter(
+            (item1) => item1._id === item.doctor_record_id
+          )[0];
+          return { ...item, doctorRecord: filter };
+        })
+      );
+    }
+  }, [appointments, doctorRecords]);
+
+  useEffect(() => {
+    if (appointments[0]?.doctorRecord) {
+      let arr = [];
+      appointments.forEach((item) => {
+        if (
+          !arr
+            .map((item1) => item1._id)
+            .includes(item.doctoc_record_id)
+        ) {
+          arr.push(item.doctorRecord);
+        }
+      });
+      arr = arr.map((item) => {
+        const filter = appointments.filter(
+          (item1) => item1.doctor_record_id === item._id
+        );
+        return {
+          ...item,
+          totalPrice: filter.reduce(
+            (acc, item1) => acc + item1.price_list.price,
+            0
+          ),
+        };
+      });
+      setAppointmentFilter(arr);
+    }
+  }, [appointments]);
+
   useEffect(() => {
     api({
       type: TypeHTTP.GET,
@@ -382,23 +437,18 @@ const HenKham = ({ type, setType }) => {
                 #
               </th>
               <th scope="col" className="w-[15%] py-3">
-                Bệnh Nhân
+                Bác sĩ
               </th>
               <th scope="col" className="w-[20%] py-3">
-                Trạng Thái
+                Số lượng cuộc hẹn
               </th>
               <th scope="col" className="w-[23%] py-3">
-                Thời Gian Cuộc Hẹn
-              </th>
-              <th scope="col" className="w-[20%] py-3">
-                Ghi Chú
-              </th>
-              <th scope="col" className="w-[17%] py-3">
-                Số tiền
+                Tổng tiền
               </th>
             </tr>
           </thead>
           <tbody className=" w-[full] bg-black font-medium">
+            {console.log(appointmentFilter)}
             {!loading &&
               appointments.map((appointment, index) => (
                 <tr

@@ -397,19 +397,13 @@ const HenKhamTaiNha = ({ type, setType }) => {
                 #
               </th>
               <th scope="col" className="w-[15%] py-3">
-                Bệnh Nhân
+                Bác sĩ
               </th>
               <th scope="col" className="w-[20%] py-3">
-                Trạng Thái
+                Số lượng cuộc hẹn khám
               </th>
               <th scope="col" className="w-[23%] py-3">
-                Thời Gian Cuộc Hẹn
-              </th>
-              <th scope="col" className="w-[20%] py-3">
-                Ghi Chú
-              </th>
-              <th scope="col" className="w-[17%] py-3">
-                Số tiền
+                Tổng tiền
               </th>
             </tr>
           </thead>
