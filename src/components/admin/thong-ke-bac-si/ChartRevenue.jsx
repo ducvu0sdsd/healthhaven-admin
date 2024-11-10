@@ -173,13 +173,6 @@ const ChartRevenue = ({ fromDate, toDate, doctorRecords, appointments, healthLog
                 data: {
                     labels,
                     datasets: [
-                        // {
-                        //     label: 'Lượt khám',
-                        //     data: consultationData,
-                        //     backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                        //     borderColor: "#ff6384",
-                        //     borderWidth: 1,
-                        // },
                         {
                             label: 'Doanh thu',
                             data: revenueData,

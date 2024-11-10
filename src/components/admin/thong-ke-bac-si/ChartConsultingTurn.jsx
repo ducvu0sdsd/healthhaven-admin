@@ -221,7 +221,7 @@ const ChartConsultingTurn = ({ fromDate, toDate, doctorRecords, appointments, he
                         legend: { position: 'bottom' },
                         subtitle: { // Sử dụng subtitle để đặt tiêu đề ở dưới
                             display: true,
-                            text: `Top 5 bác sĩ có doanh thu cao nhất từ ${fromDate} đến ${toDate}`,
+                            text: `Top 5 bác sĩ có lượt khám cao nhất từ ${fromDate} đến ${toDate}`,
                             position: 'bottom', // Đặt vị trí ở dưới
                             padding: { top: 10, bottom: 20 }, // Tùy chỉnh khoảng cách
                             font: {
@@ -251,16 +251,6 @@ const ChartConsultingTurn = ({ fromDate, toDate, doctorRecords, appointments, he
                 <div className='relative w-[100%] flex flex-col'>
                     <canvas ref={chartRef} />
                 </div>
-                {/* <div style={{}} className='relative px-4 py-2 rounded-lg h-[160px] w-[100%] flex flex-col'>
-                    <div className='flex gap-2'>
-                        <span className='text-[#292929] text-[15px] font-medium'>Lưu ý:</span>
-                        <div className='flex flex-col gap-1'>
-                            <span className='text-[#3e3e3e] text-[14px] font-medium'>Các thông tin và doanh thu đang hiển thị phụ thuộc vào thời gian lựa chọn</span>
-                            <span className='text-[#3e3e3e] text-[14px] font-medium'>Doanh thu của bác sĩ là 70% doanh thu từ các cuộc hẹn khám</span>
-                            <span className='text-[#3e3e3e] text-[14px] font-medium'>Tổng doanh thu là tổng tất cả doanh thu của các bác sĩ</span>
-                        </div>
-                    </div>
-                </div> */}
             </div>
             <div className='w-[29%] h-[80%] flex flex-col border-l-[1px] border-[#d9d9d9] px-3 text-[#2b2b2b] gap-1'>
                 <span className='text-[15px] font-semibold'>Lượt khám theo từng bác sĩ</span>
