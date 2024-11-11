@@ -4,7 +4,7 @@ import { api, TypeHTTP } from '@/utils/api';
 import { Chart } from "chart.js/auto";
 import { formatMoney } from '@/utils/others';
 
-const ChartConsultingTurn = ({ fromDate, toDate, doctorRecords, appointments, healthLogBooks, appointmentHomes, readyAppointment, readyAppointmentHome, readyLogBook }) => {
+const ChartConsultingTurn = ({ setCurrentDoctor, fromDate, toDate, doctorRecords, appointments, healthLogBooks, appointmentHomes, readyAppointment, readyAppointmentHome, readyLogBook }) => {
 
     const [top5Doctor, setTop5Doctor] = useState([]);
     const [allTopDoctor, setAllTopDoctor] = useState([])
@@ -241,11 +241,10 @@ const ChartConsultingTurn = ({ fromDate, toDate, doctorRecords, appointments, he
 
 
     return (
-        <div className='w-full h-full flex mt-[0.5rem] justify-between'>
+        <div className='h-full flex mt-[0.5rem] justify-between'>
             <div className='w-[70%] flex flex-col gap-1'>
                 <div className='flex items-center mb-2'>
                     <img src='/consulting.png' className='w-[50px]' />
-                    {console.log(allTopDoctor)}
                     <span className='text-[#292929] text-[15px] font-medium translate-y-[5px]'>Tổng lượt khám tất cả bác sĩ: {allTopDoctor.reduce((total, item) => total += item.totalAppointments + item.totalAppointmentHomes + item.totalLogBooks, 0)} lượt khám</span>
                 </div>
                 <div className='relative w-[100%] flex flex-col'>
@@ -256,7 +255,7 @@ const ChartConsultingTurn = ({ fromDate, toDate, doctorRecords, appointments, he
                 <span className='text-[15px] font-semibold'>Lượt khám theo từng bác sĩ</span>
                 <div className='h-[100%] overflow-auto w-full flex flex-col gap-2'>
                     {allTopDoctor.map((item, index) => (
-                        <div key={index} className='w-full shadow-sm bg-[#f8f8f89e] p-2 rounded-md flex items-start relative gap-2'>
+                        <div onClick={() => setCurrentDoctor(item)} key={index} className='cursor-pointer w-full shadow-sm bg-[#f8f8f89e] p-2 rounded-md flex items-start relative gap-2'>
                             <div className='w-[45px] h-[45px] rounded-full overflow-hidden border-[2px] flex justify-center bg-[white] items-center border-[#4edcc1]'>
                                 <img src={item.doctor.image} className='h-[45px] translate-y-[5px]' />
                             </div>

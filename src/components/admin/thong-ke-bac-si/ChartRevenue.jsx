@@ -4,7 +4,7 @@ import { api, TypeHTTP } from '@/utils/api';
 import { Chart } from "chart.js/auto";
 import { formatMoney } from '@/utils/others';
 
-const ChartRevenue = ({ fromDate, toDate, doctorRecords, appointments, healthLogBooks, appointmentHomes, readyAppointment, readyAppointmentHome, readyLogBook }) => {
+const ChartRevenue = ({ setCurrentDoctor, fromDate, toDate, doctorRecords, appointments, healthLogBooks, appointmentHomes, readyAppointment, readyAppointmentHome, readyLogBook }) => {
 
     const [top5Doctor, setTop5Doctor] = useState([]);
     const [allTopDoctor, setAllTopDoctor] = useState([])
@@ -149,13 +149,13 @@ const ChartRevenue = ({ fromDate, toDate, doctorRecords, appointments, healthLog
 
     useEffect(() => {
         if (top5Doctor.length > 0) {
-            // Tạo 10 labels theo top 5
+            // Tạo 5 labels theo top 5
             setLabels(top5Doctor.map(item => 'BS. ' + item.doctor.fullName.split(' ')[item.doctor.fullName.split(' ').length - 2] + " " + item.doctor.fullName.split(' ')[item.doctor.fullName.split(' ').length - 1]))
 
-            // Tạo 10 Số lượng khám theo top 5
+            // Tạo 5 Số lượng khám theo top 5
             setConsultationData(top5Doctor.map(item => item.totalAppointments))
 
-            // Tạo 10 doanh thu theo top 5
+            // Tạo 5 doanh thu theo top 5
             setRevenueData(top5Doctor.map(item => item.totalPrice))
         }
     }, [top5Doctor])
@@ -222,7 +222,7 @@ const ChartRevenue = ({ fromDate, toDate, doctorRecords, appointments, healthLog
 
 
     return (
-        <div className='w-full h-full flex mt-[0.5rem] justify-between'>
+        <div className='h-full flex mt-[0.5rem] justify-between'>
             <div className='w-[70%] flex flex-col gap-1'>
                 <div className='flex items-center mb-2'>
                     <img src='/revenue.png' className='w-[50px]' />
@@ -235,7 +235,7 @@ const ChartRevenue = ({ fromDate, toDate, doctorRecords, appointments, healthLog
                     <div className='flex gap-2'>
                         <span className='text-[#292929] text-[15px] font-medium'>Lưu ý:</span>
                         <div className='flex flex-col gap-1'>
-                            <span className='text-[#3e3e3e] text-[14px] font-medium'>Các thông tin và doanh thu đang hiển thị phụ thuộc vào thời gian lựa chọn</span>
+                            <span className='text-[#3e3e3e] text-[14px] font-medium'>Các thông tin về doanh thu đang hiển thị phụ thuộc vào thời gian lựa chọn</span>
                             <span className='text-[#3e3e3e] text-[14px] font-medium'>Doanh thu của bác sĩ là 70% doanh thu từ các cuộc hẹn khám</span>
                             <span className='text-[#3e3e3e] text-[14px] font-medium'>Tổng doanh thu là tổng tất cả doanh thu của các bác sĩ</span>
                         </div>
@@ -246,7 +246,7 @@ const ChartRevenue = ({ fromDate, toDate, doctorRecords, appointments, healthLog
                 <span className='text-[15px] font-semibold'>Doanh thu theo từng bác sĩ</span>
                 <div className='h-[100%] overflow-auto w-full flex flex-col gap-2'>
                     {allTopDoctor.map((item, index) => (
-                        <div key={index} className='w-full shadow-sm bg-[#f8f8f89e] p-2 rounded-md flex items-center relative gap-2'>
+                        <div onClick={() => setCurrentDoctor(item)} key={index} className='w-full cursor-pointer shadow-sm bg-[#f8f8f89e] p-2 rounded-md flex items-center relative gap-2'>
                             <div className='w-[45px] h-[45px] rounded-full overflow-hidden border-[2px] flex justify-center bg-[white] items-center border-[#4edcc1]'>
                                 <img src={item.doctor.image} className='h-[45px] translate-y-[5px]' />
                             </div>

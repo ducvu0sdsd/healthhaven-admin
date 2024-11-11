@@ -21,23 +21,6 @@ const ThongKeManagement = () => {
   const [type, setType] = useState("1");
   const [ticketType, setTicketType] = useState("1");
 
-  // useEffect(() => {
-  //   api({
-  //     sendToken: false,
-  //     path: "/appointments/getAll",
-  //     type: TypeHTTP.GET,
-  //   }).then((res) => setAppointments(res));
-  //   api({
-  //     sendToken: true,
-  //     path: "/appointmentHomes/getAll",
-  //     type: TypeHTTP.GET,
-  //   }).then((res) => setAppointmentHomes(res));
-  //   api({
-  //     sendToken: true,
-  //     path: "/healthLogBooks/get-all",
-  //     type: TypeHTTP.GET,
-  //   }).then((res) => setLogBooks(res));
-  // }, []);
   return (
     <section className="h-screen w-full flex z-0">
       <Navbar />
@@ -78,11 +61,6 @@ const ThongKeManagement = () => {
         ) : (
           <TheoDoiSucKhoe type={type} setType={setType} />
         )}
-        {/* : ticketType === "2" ? (
-          <TheoDoiSucKhoe type={type} setType={setType} />
-        ) : (
-          <HenKhamTaiNha type={type} setType={setType} />
-        )} */}
       </div>
     </section>
   );

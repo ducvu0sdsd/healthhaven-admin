@@ -1,6 +1,7 @@
 'use client'
 import ChartConsultingTurn from '@/components/admin/thong-ke-bac-si/ChartConsultingTurn';
 import ChartRevenue from '@/components/admin/thong-ke-bac-si/ChartRevenue';
+import DetailDoctor from '@/components/admin/thong-ke-bac-si/DetailDoctor';
 import Header from '@/components/header'
 import Navbar from '@/components/menu/navbar'
 import { api, TypeHTTP } from '@/utils/api';
@@ -19,6 +20,7 @@ const ThongKeBacSi = () => {
     const [readyLogBook, setReadyLogBook] = useState(false)
     const [type, setType] = useState('1')
     const [reload, setReload] = useState(true)
+    const [currentDoctor, setCurrentDoctor] = useState()
 
     useEffect(() => {
         const currentDate = new Date();
@@ -107,31 +109,38 @@ const ThongKeBacSi = () => {
     return (
         <section className="h-screen w-full flex z-0">
             <Navbar />
-            <div className="w-full min-h-screen relative pl-[20px] pb-[10px] flex flex-col gap-3">
-                <Header
-                    image={"/calendar.png"}
-                    text={"Thống Kê Bác Sĩ"}
-                />
-                <div className='w-full flex items-center justify-between px-2'>
-                    <div className='flex items-center text-[15px] gap-2'>
-                        <span className='font-semibold'>Thống kê từ ngày</span>
-                        <input value={fromDate} onChange={e => setFromDate(e.target.value)} type='date' className='px-4 py-1 border-[1px] border-[#dadada] rounded-md' />
-                        <span className='font-semibold'>đến ngày</span>
-                        <input value={toDate} onChange={e => setToDate(e.target.value)} type='date' className='px-4 py-1 border-[1px] border-[#dadada] rounded-md' />
-                        <button style={{ background: 'linear-gradient(to right, #36d1dc, #5b86e5)' }} onClick={() => setReload(!reload)} className='text-[14px] px-4 transition-all hover:scale-[1.05] py-1 rounded-md text-[white]'>
-                            Tải Lại
-                        </button>
+            <div className="w-full min-h-screen relative flex flex-col gap-3">
+                <div className='w-full h-full flex'>
+                    <div style={{ marginLeft: `-${currentDoctor ? 100 : 0}%`, transition: '0.5s' }} className='flex w-full h-full'>
+                        <div className='min-w-[100%] h-full flex flex-col gap-3 px-4'>
+                            <Header
+                                image={"/calendar.png"}
+                                text={"Thống Kê Bác Sĩ"}
+                            />
+                            <div className='w-full flex items-center justify-between px-2'>
+                                <div className='flex items-center text-[15px] gap-2'>
+                                    <span className='font-semibold'>Thống kê từ ngày</span>
+                                    <input value={fromDate} onChange={e => setFromDate(e.target.value)} type='date' className='px-4 py-1 border-[1px] border-[#dadada] rounded-md' />
+                                    <span className='font-semibold'>đến ngày</span>
+                                    <input value={toDate} onChange={e => setToDate(e.target.value)} type='date' className='px-4 py-1 border-[1px] border-[#dadada] rounded-md' />
+                                    <button style={{ background: 'linear-gradient(to right, #36d1dc, #5b86e5)' }} onClick={() => setReload(!reload)} className='text-[14px] px-4 transition-all hover:scale-[1.05] py-1 rounded-md text-[white]'>
+                                        Tải Lại
+                                    </button>
+                                </div>
+                                <select value={type} onChange={e => setType(e.target.value)} className='px-4 py-1 border-[1px] border-[#dadada] rounded-md text-[14px] focus:outline-0'>
+                                    <option value={'1'}>Thống Kê Doanh Thu</option>
+                                    <option value={'2'}>Thông Kê Lượt Khám</option>
+                                </select>
+                            </div>
+                            {type === '1' ? (
+                                <ChartRevenue setCurrentDoctor={setCurrentDoctor} fromDate={fromDate} toDate={toDate} readyLogBook={readyLogBook} healthLogBooks={healthLogBooks} readyAppointment={readyAppointment} readyAppointmentHome={readyAppointmentHome} doctorRecords={doctorRecords} appointments={appointments} appointmentHomes={appointmentHomes} />
+                            ) : (
+                                <ChartConsultingTurn setCurrentDoctor={setCurrentDoctor} fromDate={fromDate} toDate={toDate} readyLogBook={readyLogBook} healthLogBooks={healthLogBooks} readyAppointment={readyAppointment} readyAppointmentHome={readyAppointmentHome} doctorRecords={doctorRecords} appointments={appointments} appointmentHomes={appointmentHomes} />
+                            )}
+                        </div>
+                        <DetailDoctor fromDate={fromDate} toDate={toDate} currentDoctor={currentDoctor} setCurrentDoctor={setCurrentDoctor} doctorRecords={doctorRecords} healthLogBooks={healthLogBooks} appointments={appointments} appointmentHomes={appointmentHomes} />
                     </div>
-                    <select value={type} onChange={e => setType(e.target.value)} className='px-4 py-1 border-[1px] border-[#dadada] rounded-md text-[14px] focus:outline-0'>
-                        <option value={'1'}>Thống Kê Doanh Thu</option>
-                        <option value={'2'}>Thông Kê Lượt Khám</option>
-                    </select>
                 </div>
-                {type === '1' ? (
-                    <ChartRevenue fromDate={fromDate} toDate={toDate} readyLogBook={readyLogBook} healthLogBooks={healthLogBooks} readyAppointment={readyAppointment} readyAppointmentHome={readyAppointmentHome} doctorRecords={doctorRecords} appointments={appointments} appointmentHomes={appointmentHomes} />
-                ) : (
-                    <ChartConsultingTurn fromDate={fromDate} toDate={toDate} readyLogBook={readyLogBook} healthLogBooks={healthLogBooks} readyAppointment={readyAppointment} readyAppointmentHome={readyAppointmentHome} doctorRecords={doctorRecords} appointments={appointments} appointmentHomes={appointmentHomes} />
-                )}
             </div>
         </section>
     )
