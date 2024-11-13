@@ -4,7 +4,7 @@ import { api, TypeHTTP } from '@/utils/api';
 import { Chart } from "chart.js/auto";
 import { formatMoney } from '@/utils/others';
 
-const ChartConsultingTurn = ({ setCurrentDoctor, fromDate, toDate, doctorRecords, appointments, healthLogBooks, appointmentHomes, readyAppointment, readyAppointmentHome, readyLogBook }) => {
+const ChartConsultingTurn = ({ doctorSuggests, setCurrentDoctor, fromDate, toDate, doctorRecords, appointments, healthLogBooks, appointmentHomes, readyAppointment, readyAppointmentHome, readyLogBook }) => {
 
     const [top5Doctor, setTop5Doctor] = useState([]);
     const [allTopDoctor, setAllTopDoctor] = useState([])
@@ -255,7 +255,7 @@ const ChartConsultingTurn = ({ setCurrentDoctor, fromDate, toDate, doctorRecords
                 <span className='text-[15px] font-semibold'>Lượt khám theo từng bác sĩ</span>
                 <div className='h-[100%] overflow-auto w-full flex flex-col gap-2'>
                     {allTopDoctor.map((item, index) => (
-                        <div onClick={() => setCurrentDoctor(item)} key={index} className='cursor-pointer w-full shadow-sm bg-[#f8f8f89e] p-2 rounded-md flex items-start relative gap-2'>
+                        <div onClick={() => setCurrentDoctor(item)} key={index} className='cursor-pointer relative w-full shadow-sm bg-[#f8f8f89e] p-2 rounded-md flex items-start relative gap-2'>
                             <div className='w-[45px] h-[45px] rounded-full overflow-hidden border-[2px] flex justify-center bg-[white] items-center border-[#4edcc1]'>
                                 <img src={item.doctor.image} className='h-[45px] translate-y-[5px]' />
                             </div>
@@ -265,6 +265,11 @@ const ChartConsultingTurn = ({ setCurrentDoctor, fromDate, toDate, doctorRecords
                                 <span className='text-[12px]'>Lượt khám tại nhà: {item.totalAppointmentHomes}</span>
                                 <span className='text-[12px]'>Lượt theo dõi sức khỏe: {item.totalLogBooks}</span>
                             </div>
+                            {doctorSuggests.map(item => item.doctor_record_id).includes(item.doctor._id) && (
+                                <div className='absolute right-1 top-[2px]'>
+                                    <i className='bx bxs-star text-[#e6e634]'></i>
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>

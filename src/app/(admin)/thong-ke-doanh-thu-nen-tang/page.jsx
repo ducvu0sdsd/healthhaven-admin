@@ -8,6 +8,7 @@ import Navbar from "@/components/menu/navbar";
 import { adminContext } from "@/context/adminContext";
 import { globalContext } from "@/context/globalContext";
 import { TypeHTTP, api } from "@/utils/api";
+import { getMonthArray } from "@/utils/date";
 import { ports } from "@/utils/routes";
 import React, {
   useContext,
@@ -15,11 +16,22 @@ import React, {
   useState,
 } from "react";
 const ThongKeManagement = () => {
-  const { adminData, adminHandler } =
-    useContext(adminContext);
-  const { globalHandler } = useContext(globalContext);
+  const { adminData, adminHandler } = useContext(adminContext);
+  const { globalHandler, globalData } = useContext(globalContext);
   const [type, setType] = useState("1");
   const [ticketType, setTicketType] = useState("1");
+  const [months, setMonths] = useState([])
+  const [currentMonth, setCurrentMonth] = useState('')
+
+  useEffect(() => {
+    if (globalData.user?.createdAt) {
+      const startMonth = Number(globalData.user?.createdAt.split('-')[1])
+      const startYear = Number(globalData.user?.createdAt.split('-')[0])
+      const months = getMonthArray(startMonth, startYear)
+      setMonths(months)
+      setCurrentMonth(months[months.length - 1])
+    }
+  }, [globalData.user?.createdAt])
 
   return (
     <section className="h-screen w-full flex z-0">
@@ -45,21 +57,21 @@ const ThongKeManagement = () => {
             </option>
           </select>
           <select
-            onChange={(e) => setType(e.target.value)}
+            value={currentMonth}
+            onChange={(e) => setCurrentMonth(e.target.value)}
             className="px-4 py-2 text-[15px] shadow-lg focus:outline-0 rounded-md font-medium"
           >
-            <option value={1}>Tất cả</option>
-            <option value={2}>Tuần này</option>
-            <option value={3}>Tháng Này</option>
-            <option value={4}>Năm này</option>
+            {months.map((item, index) => (
+              <option key={index}>{item}</option>
+            ))}
           </select>
         </div>
         {ticketType === "1" ? (
-          <HenKham type={type} setType={setType} />
+          <HenKham month={currentMonth} />
         ) : ticketType === "2" ? (
-          <HenKhamTaiNha type={type} setType={setType} />
+          <HenKhamTaiNha month={currentMonth} />
         ) : (
-          <TheoDoiSucKhoe type={type} setType={setType} />
+          <TheoDoiSucKhoe month={currentMonth} />
         )}
       </div>
     </section>

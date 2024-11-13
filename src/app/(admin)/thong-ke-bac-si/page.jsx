@@ -21,6 +21,17 @@ const ThongKeBacSi = () => {
     const [type, setType] = useState('1')
     const [reload, setReload] = useState(true)
     const [currentDoctor, setCurrentDoctor] = useState()
+    const [doctorSuggests, setDoctorSuggests] = useState([])
+
+    useEffect(() => {
+        api({
+            type: TypeHTTP.GET,
+            path: "/doctorSuggests/get-all",
+            sendToken: false,
+        }).then((res) => {
+            setDoctorSuggests(res)
+        });
+    }, [])
 
     useEffect(() => {
         const currentDate = new Date();
@@ -133,12 +144,12 @@ const ThongKeBacSi = () => {
                                 </select>
                             </div>
                             {type === '1' ? (
-                                <ChartRevenue setCurrentDoctor={setCurrentDoctor} fromDate={fromDate} toDate={toDate} readyLogBook={readyLogBook} healthLogBooks={healthLogBooks} readyAppointment={readyAppointment} readyAppointmentHome={readyAppointmentHome} doctorRecords={doctorRecords} appointments={appointments} appointmentHomes={appointmentHomes} />
+                                <ChartRevenue doctorSuggests={doctorSuggests} setCurrentDoctor={setCurrentDoctor} fromDate={fromDate} toDate={toDate} readyLogBook={readyLogBook} healthLogBooks={healthLogBooks} readyAppointment={readyAppointment} readyAppointmentHome={readyAppointmentHome} doctorRecords={doctorRecords} appointments={appointments} appointmentHomes={appointmentHomes} />
                             ) : (
-                                <ChartConsultingTurn setCurrentDoctor={setCurrentDoctor} fromDate={fromDate} toDate={toDate} readyLogBook={readyLogBook} healthLogBooks={healthLogBooks} readyAppointment={readyAppointment} readyAppointmentHome={readyAppointmentHome} doctorRecords={doctorRecords} appointments={appointments} appointmentHomes={appointmentHomes} />
+                                <ChartConsultingTurn doctorSuggests={doctorSuggests} setCurrentDoctor={setCurrentDoctor} fromDate={fromDate} toDate={toDate} readyLogBook={readyLogBook} healthLogBooks={healthLogBooks} readyAppointment={readyAppointment} readyAppointmentHome={readyAppointmentHome} doctorRecords={doctorRecords} appointments={appointments} appointmentHomes={appointmentHomes} />
                             )}
                         </div>
-                        <DetailDoctor fromDate={fromDate} toDate={toDate} currentDoctor={currentDoctor} setCurrentDoctor={setCurrentDoctor} doctorRecords={doctorRecords} healthLogBooks={healthLogBooks} appointments={appointments} appointmentHomes={appointmentHomes} />
+                        <DetailDoctor setDoctorSuggests={setDoctorSuggests} doctorSuggests={doctorSuggests} fromDate={fromDate} toDate={toDate} currentDoctor={currentDoctor} setCurrentDoctor={setCurrentDoctor} doctorRecords={doctorRecords} healthLogBooks={healthLogBooks} appointments={appointments} appointmentHomes={appointmentHomes} />
                     </div>
                 </div>
             </div>

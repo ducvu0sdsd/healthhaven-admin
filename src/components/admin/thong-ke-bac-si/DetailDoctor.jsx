@@ -1,9 +1,12 @@
+import { globalContext, notifyType } from '@/context/globalContext'
+import { api, TypeHTTP } from '@/utils/api'
 import { formatMoney } from '@/utils/others'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
-const DetailDoctor = ({ currentDoctor, setCurrentDoctor, appointments, healthLogBooks, appointmentHomes, doctorRecords, fromDate, toDate }) => {
+const DetailDoctor = ({ doctorSuggests, setDoctorSuggests, currentDoctor, setCurrentDoctor, appointments, healthLogBooks, appointmentHomes, doctorRecords, fromDate, toDate }) => {
 
     const [myAppointments, setMyAppointments] = useState([])
+    const { globalHandler } = useContext(globalContext)
 
     useEffect(() => {
         if (currentDoctor) {
@@ -54,6 +57,22 @@ const DetailDoctor = ({ currentDoctor, setCurrentDoctor, appointments, healthLog
         }
     }, [appointments, healthLogBooks, appointmentHomes, currentDoctor])
 
+    const handleAddToSuggesting = (doctor_id) => {
+        api({ type: TypeHTTP.POST, path: '/doctorSuggests/save', sendToken: true, body: { doctor_record_id: doctor_id } })
+            .then(res => {
+                setDoctorSuggests(prev => [...prev, res])
+                globalHandler.notify(notifyType.SUCCESS, 'Đã thêm bác sĩ vào mục đề xuất')
+            })
+    }
+
+    const handleRemoveFromSuggesting = (doctor_id) => {
+        api({ type: TypeHTTP.DELETE, path: `/doctorSuggests/delete/${doctor_id}`, sendToken: true })
+            .then(res => {
+                setDoctorSuggests(prev => prev.filter(item => item._id !== res._id))
+                globalHandler.notify(notifyType.SUCCESS, 'Đã xóa bác sĩ khỏi mục đề xuất')
+            })
+    }
+
     return (
         <div className='min-w-[100%] h-full flex flex-col relative'>
             <button onClick={() => setCurrentDoctor()} className='absolute text-[25px] z-10 left-2 top-2 flex items-center'>
@@ -67,9 +86,23 @@ const DetailDoctor = ({ currentDoctor, setCurrentDoctor, appointments, healthLog
                             <img src={currentDoctor?.doctor?.image} className='h-[100px] translate-y-[5px]' />
                         </div>
                         <div className='flex flex-col items-start gap-1'>
-                            <span className='text-[18px] font-semibold'>BS. {currentDoctor?.doctor?.fullName}</span>
-                            <span className='px-3 py-1 text-[14px] bg-[#50d4bc] rounded-md text-[white]'>{currentDoctor?.doctor?.specialize}</span>
+                            <div className='flex items-center gap-2'>
+                                <span className='text-[18px] font-semibold'>BS. {currentDoctor?.doctor?.fullName}</span>
+                                <span className='px-3 py-[2px] text-[13px] bg-[#50d4bc] rounded-md text-[white]'>{currentDoctor?.doctor?.specialize}</span>
+                                {doctorSuggests.map(item => item.doctor_record_id).includes(currentDoctor?.doctor?._id) && (
+                                    <span className='text-[14px]'>(Được đề xuất)</span>
+                                )}
+                            </div>
                             <span className='text-[14px]'>Tổng doanh thu từ {fromDate} đến {toDate}: <span className='font-semibold'>{formatMoney(currentDoctor?.totalPrice) === '' ? 0 : formatMoney(currentDoctor?.totalPrice)}đ</span></span>
+                            {doctorSuggests.map(item => item.doctor_record_id).includes(currentDoctor?.doctor?._id) ? (
+                                <button onClick={() => handleRemoveFromSuggesting(currentDoctor?.doctor?._id)} className='text-[13px] bg-[#50d4bc] text-[white] px-4 py-1 rounded-md'>
+                                    Xóa khỏi mục đề xuất
+                                </button>
+                            ) : (
+                                <button onClick={() => handleAddToSuggesting(currentDoctor?.doctor?._id)} className='text-[13px] bg-[#50d4bc] text-[white] px-4 py-1 rounded-md'>
+                                    Thêm vào mục đề xuất
+                                </button>
+                            )}
                         </div>
                     </div>
                     <div className='flex flex-col'>
