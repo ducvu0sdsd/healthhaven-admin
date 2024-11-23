@@ -1,13 +1,7 @@
 import { adminContext } from "@/context/adminContext";
-import {
-  globalContext,
-  notifyType,
-} from "@/context/globalContext";
+import { globalContext, notifyType } from "@/context/globalContext";
 import { TypeHTTP, api } from "@/utils/api";
-import {
-  chuyen_doi_tien_VND,
-  convertISODateToString,
-} from "@/utils/others";
+import { chuyen_doi_tien_VND, convertISODateToString } from "@/utils/others";
 import { ports } from "@/utils/routes";
 import React, { useContext } from "react";
 
@@ -16,16 +10,12 @@ const ListCuocHen = ({ dsCuocHen, payments }) => {
   const { adminHandler } = useContext(adminContext);
 
   const handleRefund = (dataUpdate) => {
-    globalHandler.notify(
-      notifyType.LOADING,
-      "Đang Hoàn Tiền"
-    );
+    globalHandler.notify(notifyType.LOADING, "Đang Hoàn Tiền");
     const currentDate = new Date();
     const vietnamTimeOffset = 7 * 60; // GMT+7 in minutes
     const localTimeOffset = currentDate.getTimezoneOffset(); // Local timezone offset in minutes
     const vietnamTime = new Date(
-      currentDate.getTime() +
-        (vietnamTimeOffset + localTimeOffset) * 60000
+      currentDate.getTime() + (vietnamTimeOffset + localTimeOffset) * 60000
     );
     const time = {
       day: vietnamTime.getDate(),
@@ -41,8 +31,7 @@ const ListCuocHen = ({ dsCuocHen, payments }) => {
       },
       date: time,
       beneficiaryAccount: {
-        accountNumber:
-          dataUpdate.patient.bank?.accountNumber,
+        accountNumber: dataUpdate.patient.bank?.accountNumber,
         bankName: dataUpdate.patient.bank?.bankName,
         accountName: dataUpdate.patient.bank?.accountName,
       },
@@ -50,11 +39,9 @@ const ListCuocHen = ({ dsCuocHen, payments }) => {
         dataUpdate.category === "APPOINTMENT"
           ? "khám trực tuyến"
           : "theo dõi sức khỏe"
-      } -MaKH${dataUpdate.patient._id}.Lịch hẹn lúc (${
-        dataUpdate.date.time
-      })-${dataUpdate.date.day}/${dataUpdate.date.month}/${
-        dataUpdate.date.year
-      }`,
+      } -MaKH${dataUpdate.patient._id}.Lịch hẹn lúc (${dataUpdate.date.time})-${
+        dataUpdate.date.day
+      }/${dataUpdate.date.month}/${dataUpdate.date.year}`,
     };
     api({
       type: TypeHTTP.POST,
@@ -62,26 +49,13 @@ const ListCuocHen = ({ dsCuocHen, payments }) => {
       path: `/payments/pay-for-patient`,
       body: body,
     }).then((res) => {
-      globalHandler.notify(
-        notifyType.SUCCESS,
-        "Hoàn tiền thành công"
-      );
+      globalHandler.notify(notifyType.SUCCESS, "Hoàn tiền thành công");
       globalHandler.reload();
     });
   };
 
   return (
     <div className="w-full h-[90%] overflow-auto mt-2">
-      <div className="flex">
-        <select
-          // onChange={(e) => setTicketType(e.target.value)}
-          className="px-4 py-2 text-[15px] shadow-lg text-start focus:outline-0 rounded-md font-medium bg-gray-100 "
-        >
-          <option value={1}>Tất cả</option>
-          <option value={2}>Đã xử lý</option>
-          <option value={3}>Chưa xử lý</option>
-        </select>
-      </div>
       <table className="text-sm w-[100%] text-[15px] text-left rtl:text-right text-gray-500 dark:text-gray-400 mt-2">
         <thead className="sticky top-0 left-0 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -124,9 +98,7 @@ const ListCuocHen = ({ dsCuocHen, payments }) => {
                 key={index}
                 className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
               >
-                <td className="px-6 py-4 ">
-                  {appointment.patient?.fullName}
-                </td>
+                <td className="px-6 py-4 ">{appointment.patient?.fullName}</td>
                 <td className="px-6 py-4 ">
                   BS. {appointment.doctor?.fullName}
                 </td>
@@ -134,15 +106,11 @@ const ListCuocHen = ({ dsCuocHen, payments }) => {
                   {chuyen_doi_tien_VND(appointment.price)}
                 </td>
                 <td className="px-6 py-4">
-                  {appointment.date?.time}-
-                  {appointment.date?.day}/
-                  {appointment.date?.month}/
-                  {appointment.date?.year}
+                  {appointment.date?.time}-{appointment.date?.day}/
+                  {appointment.date?.month}/{appointment.date?.year}
                 </td>
 
-                <td className="px-6 py-4">
-                  {appointment.description}
-                </td>
+                <td className="px-6 py-4">{appointment.description}</td>
                 <td className="px-6 py-4">
                   {appointment.patient.bank?.bankName}
                   {appointment.patient.bank?.accountNumber}-
@@ -152,8 +120,7 @@ const ListCuocHen = ({ dsCuocHen, payments }) => {
                   className="px-6 py-4"
                   style={{
                     color:
-                      appointment.status_payment?.type ===
-                      "RESOLVED"
+                      appointment.status_payment?.type === "RESOLVED"
                         ? "green"
                         : "blue",
                   }}
@@ -161,12 +128,9 @@ const ListCuocHen = ({ dsCuocHen, payments }) => {
                   {appointment.status_payment?.messages}
                 </td>
                 <td className="px-6 py-4 flex items-center gap-1">
-                  {appointment.status_payment?.type ===
-                    "PENDING" && (
+                  {appointment.status_payment?.type === "PENDING" && (
                     <button
-                      onClick={() =>
-                        handleRefund(appointment)
-                      }
+                      onClick={() => handleRefund(appointment)}
                       className="px-4 py-1 rounded-md text-[14px] bg-[blue] text-white"
                     >
                       Hoàn tiền

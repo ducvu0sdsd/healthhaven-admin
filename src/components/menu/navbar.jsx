@@ -1,18 +1,14 @@
 "use client";
-import {
-  globalContext,
-  notifyType,
-} from "@/context/globalContext";
+import { globalContext, notifyType } from "@/context/globalContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import Logo from "../logo";
 
 const Navbar = () => {
-  const { globalHandler, globalData } =
-    useContext(globalContext);
+  const { globalHandler, globalData } = useContext(globalContext);
   const router = useRouter();
-  const [displayAnalysis, setDisplayAnalysis] = useState(false)
+  const [displayAnalysis, setDisplayAnalysis] = useState(false);
 
   const handleSignOut = () => {
     globalHandler.notify(notifyType.LOADING, "Go Out");
@@ -44,6 +40,14 @@ const Navbar = () => {
           </span>
         </div>
       </Link>
+      <Link href={"/quan-ly-khach"}>
+        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
+          <img src="/cus.png" width={"32px"} />
+          <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
+            Quản Lý Khách Vãn Lai
+          </span>
+        </div>
+      </Link>
       <Link href={"/quan-ly-benh"}>
         <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
           <img src="/loaibenh-manage.png" width={"35px"} />
@@ -70,11 +74,7 @@ const Navbar = () => {
       </Link>
       <Link href={"/quan-ly-qa"}>
         <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
-          <img
-            src="/qa-manager.jpg"
-            width={"32px"}
-            className="rounded-full"
-          />
+          <img src="/qa-manager.jpg" width={"32px"} className="rounded-full" />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Quản Lý Hỏi Đáp
           </span>
@@ -82,11 +82,7 @@ const Navbar = () => {
       </Link>
       <Link href={"/tra-luong"}>
         <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
-          <img
-            src="/tinhluong.png"
-            width={"32px"}
-            className="rounded-full"
-          />
+          <img src="/tinhluong.png" width={"32px"} className="rounded-full" />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Trả lương cho bác sĩ
           </span>
@@ -94,35 +90,47 @@ const Navbar = () => {
       </Link>
       <Link href={"/lich-hen-bi-huy"}>
         <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
-          <img
-            src="/lichhuy.png"
-            width={"32px"}
-            className="rounded-full"
-          />
+          <img src="/lichhuy.png" width={"32px"} className="rounded-full" />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Lịch hẹn bị hủy
           </span>
         </div>
       </Link>
-      <div onClick={() => setDisplayAnalysis(!displayAnalysis)} className="flex w-full items-center justify-start gap-2 cursor-pointer mb-2">
+      <div
+        onClick={() => setDisplayAnalysis(!displayAnalysis)}
+        className="flex w-full items-center justify-start gap-2 cursor-pointer mb-2"
+      >
         <img src="/thongke.png" width={"32px"} />
         <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
           Thống Kê
         </span>
-        <i className='bx bx-chevron-down text-[20px] translate-y-[5px]'></i>
+        <i className="bx bx-chevron-down text-[20px] translate-y-[5px]"></i>
       </div>
-      <div style={{ height: displayAnalysis === true ? '70px' : '0px', transition: '0.5s', marginBottom: displayAnalysis === true ? '12px' : '0px' }} className="w-[100%] flex flex-col px-4 gap-2 overflow-hidden">
+      <div
+        style={{
+          height: displayAnalysis === true ? "80px" : "0px",
+          transition: "0.5s",
+          marginBottom: displayAnalysis === true ? "12px" : "0px",
+        }}
+        className="w-[100%] flex flex-col px-4 gap-2 overflow-hidden"
+      >
         <Link href={"/thong-ke-bac-si"}>
-          <div onClick={() => setDisplayAnalysis(!displayAnalysis)} className="flex w-full items-center justify-start gap-2 cursor-pointer">
-            <img src="/thongke.png" width={"32px"} />
+          <div
+            onClick={() => setDisplayAnalysis(!displayAnalysis)}
+            className="flex w-full items-center justify-start gap-2 cursor-pointer"
+          >
+            <img src="/thong-ke-bs.png" width={"32px"} />
             <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
               Thống Kê Bác Sĩ
             </span>
           </div>
         </Link>
         <Link href={"/thong-ke-doanh-thu-nen-tang"}>
-          <div onClick={() => setDisplayAnalysis(!displayAnalysis)} className="flex w-full items-center justify-start gap-2 cursor-pointer">
-            <img src="/thongke.png" width={"32px"} />
+          <div
+            onClick={() => setDisplayAnalysis(!displayAnalysis)}
+            className="flex w-full items-center justify-start gap-2 cursor-pointer"
+          >
+            <img src="/thong-ke-doanh-thu-ht.png" width={"32px"} />
             <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
               Doanh Thu Nền Tảng
             </span>

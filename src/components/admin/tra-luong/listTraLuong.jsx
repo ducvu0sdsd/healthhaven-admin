@@ -1,34 +1,24 @@
 import { adminContext } from "@/context/adminContext";
-import {
-  globalContext,
-  notifyType,
-} from "@/context/globalContext";
+import { globalContext, notifyType } from "@/context/globalContext";
 import { TypeHTTP, api } from "@/utils/api";
-import {
-  chuyen_doi_tien_VND,
-  convertISODateToString,
-} from "@/utils/others";
+import { chuyen_doi_tien_VND, convertISODateToString } from "@/utils/others";
 import { ports } from "@/utils/routes";
 import React, { useContext, useState } from "react";
 
-const ListTraLuong = ({ payments }) => {
+const ListTraLuong = ({ payments, typeTicket }) => {
   const { globalHandler } = useContext(globalContext);
   const { adminHandler } = useContext(adminContext);
   const [reason, setReason] = useState("");
-  const [visibleFormReason, setVisibleFormReason] =
-    useState(false);
+  const [visibleFormReason, setVisibleFormReason] = useState(false);
   const [dataSelected, setDataSelected] = useState();
+  const [ticketType, setTicketType] = useState("1");
   const handleAccept = (appointment) => {
-    globalHandler.notify(
-      notifyType.LOADING,
-      "Đang xử lý yêu cầu"
-    );
+    globalHandler.notify(notifyType.LOADING, "Đang xử lý yêu cầu");
     const currentDate = new Date();
     const vietnamTimeOffset = 7 * 60; // GMT+7 in minutes
     const localTimeOffset = currentDate.getTimezoneOffset(); // Local timezone offset in minutes
     const vietnamTime = new Date(
-      currentDate.getTime() +
-        (vietnamTimeOffset + localTimeOffset) * 60000
+      currentDate.getTime() + (vietnamTimeOffset + localTimeOffset) * 60000
     );
     const time = {
       day: vietnamTime.getDate(),
@@ -46,8 +36,7 @@ const ListTraLuong = ({ payments }) => {
           messages: "Đã chấp nhận yêu cầu",
         },
         dateTake: time,
-        descriptionTake:
-          "Chấp nhận yêu cầu nhận tiền của bác sĩ",
+        descriptionTake: "Chấp nhận yêu cầu nhận tiền của bác sĩ",
       },
 
       sendToken: true,
@@ -70,20 +59,17 @@ const ListTraLuong = ({ payments }) => {
           notifyType.SUCCESS,
           "Đã chấp nhận yêu cầu rút tiền thành công!!!"
         );
+        globalHandler.reload();
       });
     });
   };
   const handleComplete = (appointment) => {
-    globalHandler.notify(
-      notifyType.LOADING,
-      "Đang xử lý yêu cầu"
-    );
+    globalHandler.notify(notifyType.LOADING, "Đang xử lý yêu cầu");
     const currentDate = new Date();
     const vietnamTimeOffset = 7 * 60; // GMT+7 in minutes
     const localTimeOffset = currentDate.getTimezoneOffset(); // Local timezone offset in minutes
     const vietnamTime = new Date(
-      currentDate.getTime() +
-        (vietnamTimeOffset + localTimeOffset) * 60000
+      currentDate.getTime() + (vietnamTimeOffset + localTimeOffset) * 60000
     );
     const time = {
       day: vietnamTime.getDate(),
@@ -125,27 +111,21 @@ const ListTraLuong = ({ payments }) => {
           notifyType.SUCCESS,
           "Yêu cầu đã được hoàn thành!!!"
         );
+        globalHandler.reload();
       });
     });
   };
   const handleRefusePayBack = () => {
     if (reason === "") {
-      globalHandler.notify(
-        notifyType.ERROR,
-        "Vui lòng nhập lý do từ chối"
-      );
+      globalHandler.notify(notifyType.ERROR, "Vui lòng nhập lý do từ chối");
       return;
     }
-    globalHandler.notify(
-      notifyType.LOADING,
-      "Đang xử lý yêu cầu"
-    );
+    globalHandler.notify(notifyType.LOADING, "Đang xử lý yêu cầu");
     const currentDate = new Date();
     const vietnamTimeOffset = 7 * 60; // GMT+7 in minutes
     const localTimeOffset = currentDate.getTimezoneOffset(); // Local timezone offset in minutes
     const vietnamTime = new Date(
-      currentDate.getTime() +
-        (vietnamTimeOffset + localTimeOffset) * 60000
+      currentDate.getTime() + (vietnamTimeOffset + localTimeOffset) * 60000
     );
     const time = {
       day: vietnamTime.getDate(),
@@ -185,10 +165,8 @@ const ListTraLuong = ({ payments }) => {
       }).then((res2) => {
         setVisibleFormReason(false);
         setReason("");
-        globalHandler.notify(
-          notifyType.SUCCESS,
-          "Yêu cầu đã bị từ chối!!!"
-        );
+        globalHandler.notify(notifyType.SUCCESS, "Yêu cầu đã bị từ chối!!!");
+        globalHandler.reload();
       });
     });
   };
@@ -196,18 +174,10 @@ const ListTraLuong = ({ payments }) => {
     setVisibleFormReason(true);
     setDataSelected(appointment);
   };
+
   return (
     <div className="w-full h-[90%] overflow-auto mt-2">
-      <div className="flex">
-        <select
-          // onChange={(e) => setTicketType(e.target.value)}
-          className="px-4 py-2 text-[15px] shadow-lg text-start focus:outline-0 rounded-md font-medium bg-gray-100 "
-        >
-          <option value={1}>Tất cả</option>
-          <option value={2}>Đã xử lý</option>
-          <option value={3}>Chưa xử lý</option>
-        </select>
-      </div>
+      <div className="flex"></div>
       <table className="text-sm w-[100%] text-[15px] text-left rtl:text-right text-gray-500 dark:text-gray-400 mt-2">
         <thead className="sticky top-0 left-0 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -241,22 +211,16 @@ const ListTraLuong = ({ payments }) => {
               key={index}
               className="odd:bg-white text-[13px] odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
             >
-              <td className="px-6 py-4 ">
-                BS. {appointment.doctor?.fullName}
-              </td>
+              <td className="px-6 py-4 ">BS. {appointment.doctor?.fullName}</td>
               <td className="px-6 py-4">
                 {chuyen_doi_tien_VND(appointment.price)}
               </td>
               <td className="px-6 py-4">
-                {appointment.dateTake?.time}-
-                {appointment.dateTake?.day}/
-                {appointment.dateTake?.month}/
-                {appointment.dateTake?.year}
+                {appointment.dateTake?.time}-{appointment.dateTake?.day}/
+                {appointment.dateTake?.month}/{appointment.dateTake?.year}
               </td>
 
-              <td className="px-6 py-4">
-                {appointment.descriptionTake}
-              </td>
+              <td className="px-6 py-4">{appointment.descriptionTake}</td>
               <td className="px-6 py-4">
                 {appointment.doctor?.bank?.bankName}
                 {appointment.doctor?.bank?.accountNumber}-
@@ -266,14 +230,11 @@ const ListTraLuong = ({ payments }) => {
                 className="px-6 py-4"
                 style={{
                   color:
-                    appointment.status_take_money?.type ===
-                    "RESOLVED"
+                    appointment.status_take_money?.type === "RESOLVED"
                       ? "blue"
-                      : appointment.status_take_money
-                          ?.type === "ACCEPT"
+                      : appointment.status_take_money?.type === "ACCEPT"
                       ? "green"
-                      : appointment.status_take_money
-                          ?.type === "PENDING"
+                      : appointment.status_take_money?.type === "PENDING"
                       ? "black"
                       : "red",
                 }}
@@ -281,34 +242,26 @@ const ListTraLuong = ({ payments }) => {
                 {appointment.status_take_money?.messages}
               </td>
               <td className="px-6 py-4 flex items-center gap-1">
-                {appointment.status_take_money?.type ===
-                  "PENDING" && (
+                {appointment.status_take_money?.type === "PENDING" && (
                   <>
                     <button
-                      onClick={() =>
-                        handleAccept(appointment)
-                      }
+                      onClick={() => handleAccept(appointment)}
                       className="px-2 py-1 rounded-md text-[12px] bg-[blue] text-white"
                     >
                       Xác nhận
                     </button>
                     <button
-                      onClick={() =>
-                        handleRefuse(appointment)
-                      }
+                      onClick={() => handleRefuse(appointment)}
                       className="px-2 py-1 rounded-md text-[12px] bg-[#ef2b2b] text-white"
                     >
                       Từ chối
                     </button>
                   </>
                 )}
-                {appointment.status_take_money?.type ===
-                  "ACCEPT" && (
+                {appointment.status_take_money?.type === "ACCEPT" && (
                   <>
                     <button
-                      onClick={() =>
-                        handleComplete(appointment)
-                      }
+                      onClick={() => handleComplete(appointment)}
                       className="px-2 py-1 rounded-md text-[12px] bg-[blue] text-white"
                     >
                       Hoàn thành
@@ -349,8 +302,7 @@ const ListTraLuong = ({ payments }) => {
                 </span>
                 <span className="font-space text-[14px]">
                   Thời gian : {dataSelected.dateTake?.time}-
-                  {dataSelected.dateTake?.day}/
-                  {dataSelected.dateTake?.month}/
+                  {dataSelected.dateTake?.day}/{dataSelected.dateTake?.month}/
                   {dataSelected.dateTake?.year}
                 </span>
               </div>
@@ -358,9 +310,7 @@ const ListTraLuong = ({ payments }) => {
               <div className="flex items-center justify-evenly">
                 <input
                   value={reason}
-                  onChange={(e) =>
-                    setReason(e.target.value)
-                  }
+                  onChange={(e) => setReason(e.target.value)}
                   placeholder="Lý do..."
                   className="text-[13px] mt-1 w-[100%] h-[38px] bg-[white] border-[1px] border-[#cfcfcf] focus:outline-0 rounded-lg px-4"
                 />
@@ -371,8 +321,7 @@ const ListTraLuong = ({ payments }) => {
             <button
               onClick={() => handleRefusePayBack()}
               style={{
-                background:
-                  "linear-gradient(to right, #11998e, #38ef7d)",
+                background: "linear-gradient(to right, #11998e, #38ef7d)",
               }}
               className="text-[white] z-[50] shadow-[#767676] absolute bottom-2 text-[15px] shadow-md rounded-xl px-[200px] py-2 transition-all cursor-pointer font-semibold"
             >
