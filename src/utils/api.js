@@ -1,5 +1,5 @@
 import axios from "axios";
-export let baseURL = "http://localhost:8999"; //https://shoeshop-backend.online
+export let baseURL = "https://shoeshop-backend.online"; //https://shoeshop-backend.online
 axios.defaults.baseURL = `${baseURL}`;
 
 export const TypeHTTP = {
@@ -15,7 +15,7 @@ export const api = ({ path, body, type, sendToken, port }) => {
     axios.defaults.baseURL = `${baseURL}`;
   } else {
     // baseURL = "https://shoeshop-backend.online";
-    baseURL = "http://localhost:8999";
+    baseURL = "https://shoeshop-backend.online";
     axios.defaults.baseURL = `${baseURL}`;
   }
   const accessToken = globalThis.localStorage.getItem("accessToken");
