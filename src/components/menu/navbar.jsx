@@ -44,7 +44,7 @@ const Navbar = () => {
         <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
           <img src="/cus.png" width={"32px"} />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
-            Quản Lý Khách Vãn Lai
+            Quản Lý Khách Vãng Lai
           </span>
         </div>
       </Link>

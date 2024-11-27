@@ -39,12 +39,12 @@ const ChartRevenue = ({ doctorSuggests, setCurrentDoctor, fromDate, toDate, doct
                         return item1.doctor._id === item.doctor._id
                     }
                 );
-                return { ...item, doctorRecord: filter };
+                return { ...item, doctorRecord: filter, doctor_record_id: filter._id };
             });
-
             // Lọc ra các bác sĩ duy nhất trong danh sách hẹn
             let arr = [];
-            arr1.forEach((item) => {
+            [...arr1, ...arr2, ...arr3].forEach((item) => {
+                console.log(item)
                 if (!arr.some((item1) => item1._id === item.doctor_record_id)) {
                     arr.push(item.doctorRecord);
                 }
@@ -89,6 +89,8 @@ const ChartRevenue = ({ doctorSuggests, setCurrentDoctor, fromDate, toDate, doct
                         )
                 };
             });
+
+            // console.log(arr2)
 
             // Sắp xếp danh sách bác sĩ theo số lượng hẹn khám và doanh thu
             const topDoctors = JSON.parse(JSON.stringify(arr))
