@@ -25,31 +25,31 @@ const Navbar = () => {
         <Logo />
       </div>
       <Link href={"/quan-ly-bac-si"}>
-        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
-          <img src="/hocphan.png" width={"32px"} />
+        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3" >
+          <img src="/hocphan.png" width={"28px"} />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Quản Lý Bác Sĩ
           </span>
         </div>
       </Link>
       <Link href={"/quan-ly-benh-nhan"}>
-        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
-          <img src="/benhnhan-manager.png" width={"32px"} />
+        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3" >
+          <img src="/benhnhan-manager.png" width={"28px"} />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Quản Lý Bệnh Nhân
           </span>
         </div>
       </Link>
       <Link href={"/quan-ly-khach"}>
-        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
-          <img src="/cus.png" width={"32px"} />
+        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3" >
+          <img src="/cus.png" width={"28px"} />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Quản Lý Khách Vãng Lai
           </span>
         </div>
       </Link>
       <Link href={"/quan-ly-benh"}>
-        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
+        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3" >
           <img src="/loaibenh-manage.png" width={"35px"} />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Quản Lý Loại Khám
@@ -57,40 +57,40 @@ const Navbar = () => {
         </div>
       </Link>
       <Link href={"/thiet-lap-cuoc-hen"}>
-        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
-          <img src="/gia-manager.png" width={"32px"} />
+        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3" >
+          <img src="/gia-manager.png" width={"28px"} />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Quán Lý Giá Dịch Vụ
           </span>
         </div>
       </Link>
       <Link href={"/quan-ly-forum"}>
-        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
-          <img src="/cam-nang-manager.png" width={"32px"} />
+        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3" >
+          <img src="/cam-nang-manager.png" width={"28px"} />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Quản Lý Cẩm Nang
           </span>
         </div>
       </Link>
       <Link href={"/quan-ly-qa"}>
-        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
-          <img src="/qa-manager.jpg" width={"32px"} className="rounded-full" />
+        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3" >
+          <img src="/qa-manager.jpg" width={"28px"} className="rounded-full" />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Quản Lý Hỏi Đáp
           </span>
         </div>
       </Link>
       <Link href={"/tra-luong"}>
-        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
-          <img src="/tinhluong.png" width={"32px"} className="rounded-full" />
+        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3" >
+          <img src="/tinhluong.png" width={"28px"} className="rounded-full" />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Trả lương cho bác sĩ
           </span>
         </div>
       </Link>
       <Link href={"/lich-hen-bi-huy"}>
-        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3">
-          <img src="/lichhuy.png" width={"32px"} className="rounded-full" />
+        <div className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3" >
+          <img src="/lichhuy.png" width={"28px"} className="rounded-full" />
           <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
             Lịch hẹn bị hủy
           </span>
@@ -98,9 +98,9 @@ const Navbar = () => {
       </Link>
       <div
         onClick={() => setDisplayAnalysis(!displayAnalysis)}
-        className="flex w-full items-center justify-start gap-2 cursor-pointer mb-2"
+        className="flex w-full items-center justify-start gap-2 cursor-pointer mb-3"
       >
-        <img src="/thongke.png" width={"32px"} />
+        <img src="/thongke.png" width={"28px"} />
         <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
           Thống Kê
         </span>
@@ -119,7 +119,7 @@ const Navbar = () => {
             onClick={() => setDisplayAnalysis(!displayAnalysis)}
             className="flex w-full items-center justify-start gap-2 cursor-pointer"
           >
-            <img src="/thong-ke-bs.png" width={"32px"} />
+            <img src="/thong-ke-bs.png" width={"28px"} />
             <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
               Thống Kê Bác Sĩ
             </span>
@@ -130,7 +130,7 @@ const Navbar = () => {
             onClick={() => setDisplayAnalysis(!displayAnalysis)}
             className="flex w-full items-center justify-start gap-2 cursor-pointer"
           >
-            <img src="/thong-ke-doanh-thu-ht.png" width={"32px"} />
+            <img src="/thong-ke-doanh-thu-ht.png" width={"28px"} />
             <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
               Doanh Thu Nền Tảng
             </span>
@@ -141,7 +141,7 @@ const Navbar = () => {
         onClick={() => handleSignOut()}
         className="flex w-full items-center justify-start gap-2 cursor-pointer"
       >
-        <img src="/signout.png" width={"32px"} />
+        <img src="/signout.png" width={"28px"} />
         <span className="hover:underline text-[13px] font-medium w-[200px] translate-y-[5px]">
           Đăng Xuất
         </span>

@@ -44,7 +44,6 @@ const ChartRevenue = ({ doctorSuggests, setCurrentDoctor, fromDate, toDate, doct
             // Lọc ra các bác sĩ duy nhất trong danh sách hẹn
             let arr = [];
             [...arr1, ...arr2, ...arr3].forEach((item) => {
-                console.log(item)
                 if (!arr.some((item1) => item1._id === item.doctor_record_id)) {
                     arr.push(item.doctorRecord);
                 }
@@ -224,16 +223,16 @@ const ChartRevenue = ({ doctorSuggests, setCurrentDoctor, fromDate, toDate, doct
 
 
     return (
-        <div className='h-full flex mt-[0.5rem] justify-between'>
+        <div className='h-full flex justify-between'>
             <div className='w-[70%] flex flex-col gap-1'>
-                <div className='flex items-center mb-2'>
-                    <img src='/revenue.png' className='w-[50px]' />
-                    <span className='text-[#292929] text-[15px] font-medium translate-y-[5px]'>Tổng doanh thu của tất cả bác sĩ: {formatMoney(allTopDoctor.reduce((total, item) => total += item.totalPrice, 0))}đ</span>
+                <div className='flex items-center'>
+                    <img src='/revenue.png' className='w-[50px] translate-y-[-5px]' />
+                    <span className='text-[#292929] text-[15px] font-medium'>Tổng doanh thu của tất cả bác sĩ: {formatMoney(allTopDoctor.reduce((total, item) => total += item.totalPrice, 0))}đ</span>
                 </div>
                 <div className='relative w-[100%] flex flex-col'>
                     <canvas ref={chartRef} />
                 </div>
-                <div style={{}} className='relative px-4 py-2 rounded-lg h-[160px] w-[100%] flex flex-col'>
+                <div style={{}} className='relative px-4 pb-2 rounded-lg h-[160px] w-[100%] flex flex-col'>
                     <div className='flex gap-2'>
                         <span className='text-[#292929] text-[15px] font-medium'>Lưu ý:</span>
                         <div className='flex flex-col gap-1'>
