@@ -92,14 +92,9 @@ const ChartRevenue = ({ doctorSuggests, setCurrentDoctor, fromDate, toDate, doct
             // console.log(arr2)
 
             // Sắp xếp danh sách bác sĩ theo số lượng hẹn khám và doanh thu
-            const topDoctors = JSON.parse(JSON.stringify(arr))
-                .sort((a, b) => {
-                    if (b.totalAppointments !== a.totalAppointments) {
-                        return b.totalAppointments - a.totalAppointments;
-                    }
-                    return b.totalPrice - a.totalPrice;
-                })
-                .slice(0, 5); // Lấy top 5
+            const topDoctors = JSON.parse(JSON.stringify(arr)).sort((a, b) => b.totalPrice - a.totalPrice).slice(0, 5)// Lấy top 5
+
+            console.log(arr.sort((a, b) => b.totalPrice - a.totalPrice))
 
             // nếu top 5 chưa đủ 5 thì lấy mấy bác sĩ 0 cho đủ 5
             if (topDoctors.length < 5) {
@@ -144,7 +139,7 @@ const ChartRevenue = ({ doctorSuggests, setCurrentDoctor, fromDate, toDate, doct
                     totalPrice: 0
                 })
             }
-            setAllTopDoctor(topDoctorsAll)
+            setAllTopDoctor(topDoctorsAll.sort((a, b) => b.totalPrice - a.totalPrice))
         }
     }, [doctorRecords, readyAppointment, readyAppointmentHome, appointmentHomes, appointments, healthLogBooks, readyLogBook]);
 
