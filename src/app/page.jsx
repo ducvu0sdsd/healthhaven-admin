@@ -48,7 +48,7 @@ export default function Home() {
   return (
     <div className="flex items-center justify-center w-full h-screen">
       <div className="flex rounded-lg overflow-hidden gap-3 border-[#e1e1e1] border-[1px]">
-        <img src="/signin.png" width={'300px'} />
+        <img src="https://www.freepik.com/premium-vector/online-medical-service-concept-medical-health_6360955.htm" width={'300px'} />
         <div className="flex flex-col w-[350px] justify-center items-center gap-3 px-[30px]">
           <h1 className="text-[22px]">Đăng Nhập</h1>
           <span className="text-center text-[13px]">Chào mừng trở lại với HealthHaven Admin</span>
